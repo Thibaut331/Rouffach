@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prospection Rouffach 68250</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f0f0f;--sur:#161616;--sur2:#1e1e1e;--bdr:#2a2a2a;--acc:#c8f135;--acc2:#f1a035;--txt:#e8e8e8;--mut:#666}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--txt);font-family:'DM Mono',monospace;font-size:13px;min-height:100vh}
+#loading{display:flex;align-items:center;justify-content:center;height:100vh;flex-direction:column;gap:16px}
+#loading p{font-family:'Syne',sans-serif;font-size:16px;color:var(--mut)}
+.spinner{width:32px;height:32px;border:3px solid var(--bdr);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+#app{display:none}
+header{padding:16px 24px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;gap:14px;position:sticky;top:0;background:var(--bg);z-index:100}
+.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:var(--acc);white-space:nowrap}
+.logo span{color:var(--mut);font-weight:400}
+.sw{flex:1;position:relative}
+.sw input{width:100%;background:var(--sur2);border:1px solid var(--bdr);color:var(--txt);font-family:'DM Mono',monospace;font-size:13px;padding:9px 14px 9px 36px;border-radius:6px;outline:none;transition:border-color .15s}
+.sw input:focus{border-color:var(--acc)}
+.sw::before{content:"&#9045;";position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:15px}
+.ctr{font-size:11px;color:var(--mut);white-space:nowrap}.ctr strong{color:var(--acc)}
+.ebtn{background:none;border:1px solid var(--bdr);color:var(--mut);font-family:'DM Mono',monospace;font-size:11px;padding:5px 11px;border-radius:4px;cursor:pointer;white-space:nowrap;transition:all .15s}
+.ebtn:hover{border-color:var(--acc2);color:var(--acc2)}
+.layout{display:flex;height:calc(100vh - 61px)}
+aside{width:260px;min-width:260px;border-right:1px solid var(--bdr);overflow-y:auto;background:var(--sur)}
+aside::-webkit-scrollbar{width:3px}
+aside::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+.fs{padding:12px 12px 10px;border-bottom:1px solid var(--bdr)}
+.ft{font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--mut);margin-bottom:8px}
+.rs{width:100%;background:var(--sur2);border:1px solid var(--bdr);color:var(--txt);font-family:'DM Mono',monospace;font-size:12px;padding:7px 9px;border-radius:5px;outline:none;cursor:pointer;transition:border-color .15s}
+.rs:focus{border-color:var(--acc)}.rs option{background:#1e1e1e}
+.rc{margin-top:5px;font-size:10px;color:var(--mut);cursor:pointer;text-decoration:underline;text-underline-offset:2px;display:none}
+.rc:hover{color:var(--acc)}.rc.v{display:block}
+.fb{display:flex;align-items:center;justify-content:space-between;width:100%;background:none;border:none;color:var(--txt);font-family:'DM Mono',monospace;font-size:11px;padding:5px 7px;border-radius:4px;cursor:pointer;text-align:left;transition:background .1s;margin-bottom:1px}
+.fb:hover{background:var(--sur2)}.fb.on{background:#1a2500;color:var(--acc)}
+.fb .lb{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:178px}
+.fb .ct{background:var(--bdr);color:var(--mut);font-size:10px;padding:1px 5px;border-radius:20px;min-width:22px;text-align:center;flex-shrink:0}
+.fb.on .ct{background:#2d4500;color:var(--acc)}
+main{flex:1;overflow-y:auto;background:var(--bg)}
+main::-webkit-scrollbar{width:3px}
+main::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+.sb{display:flex;align-items:center;gap:7px;padding:8px 16px;border-bottom:1px solid var(--bdr);position:sticky;top:0;background:var(--bg);z-index:10;flex-wrap:wrap}
+.sl{color:var(--mut);font-size:11px}
+.sbt{background:none;border:1px solid var(--bdr);color:var(--mut);font-family:'DM Mono',monospace;font-size:11px;padding:3px 9px;border-radius:4px;cursor:pointer;transition:all .15s}
+.sbt:hover,.sbt.on{border-color:var(--acc);color:var(--acc);background:#1a2500}
+.lh{display:grid;grid-template-columns:1fr 148px 138px 90px;gap:12px;padding:6px 16px;border-bottom:1px solid var(--bdr);background:var(--sur)}
+.lh span{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:1px;font-family:'Syne',sans-serif;font-weight:700}
+.cr{display:grid;grid-template-columns:1fr 148px 138px 90px;gap:12px;align-items:center;padding:10px 16px;border-bottom:1px solid var(--bdr);cursor:pointer;transition:background .1s}
+.cr:hover{background:var(--sur)}.cr.sel{background:#161a0d;border-left:2px solid var(--acc);padding-left:14px}
+.cn{font-family:'Syne',sans-serif;font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ca{font-size:11px;color:var(--mut);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cac{font-size:11px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cac b{font-size:10px;color:var(--acc);font-weight:400;margin-right:3px}
+.eb{display:inline-block;padding:2px 7px;border-radius:20px;font-size:10px;background:var(--sur2);color:var(--mut);border:1px solid var(--bdr)}
+.eb.hs{color:var(--acc2);border-color:#3a2500;background:#1a1200}
+.cd{font-size:11px;color:var(--mut);text-align:right}
+.rsep{padding:6px 16px 3px;font-family:'Syne',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--acc);background:#0c0f07;border-bottom:1px solid #1a2500;border-top:2px solid var(--bdr);display:flex;align-items:center;gap:10px}
+.rsep small{color:var(--mut);font-size:10px;font-weight:400;letter-spacing:0;text-transform:none}
+.dp{width:330px;min-width:330px;border-left:1px solid var(--bdr);background:var(--sur);overflow-y:auto;display:none;flex-direction:column}
+.dp.open{display:flex}
+.dp::-webkit-scrollbar{width:3px}.dp::-webkit-scrollbar-thumb{background:var(--bdr);border-radius:2px}
+.dh{padding:18px 18px 12px;border-bottom:1px solid var(--bdr);position:relative}
+.dn{font-family:'Syne',sans-serif;font-size:15px;font-weight:800;line-height:1.25;padding-right:24px}
+.dc{position:absolute;top:14px;right:14px;background:none;border:none;color:var(--mut);font-size:20px;cursor:pointer;line-height:1}
+.dc:hover{color:var(--txt)}
+.db{padding:15px 18px;flex:1}
+.dr{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start}
+.dk{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.8px;min-width:78px;padding-top:1px;font-family:'Syne',sans-serif;font-weight:600;flex-shrink:0}
+.dv{font-size:12px;color:var(--txt);flex:1;word-break:break-word}
+.abadge{display:inline-block;background:#1a2500;color:var(--acc);border:1px solid #2d4500;padding:3px 9px;border-radius:4px;font-size:12px;font-family:'Syne',sans-serif;font-weight:600;margin-bottom:4px}
+.si{font-family:'DM Mono',monospace;font-size:11px;color:var(--acc);letter-spacing:.8px}
+.rl{color:var(--mut);font-size:11px;cursor:pointer;text-decoration:underline;text-underline-offset:2px;margin-top:3px;display:block}
+.rl:hover{color:var(--acc)}
+.actbar{padding:12px 18px;border-top:1px solid var(--bdr);display:flex;flex-direction:column;gap:6px}
+.bp{background:var(--acc);color:#0f0f0f;border:none;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;padding:9px;border-radius:5px;cursor:pointer;width:100%;transition:opacity .15s}
+.bp:hover{opacity:.85}
+.bp2{background:var(--sur2);color:var(--acc);border:1px solid #2d4500;font-family:'Syne',sans-serif;font-weight:600;font-size:12px;padding:9px;border-radius:5px;cursor:pointer;width:100%;transition:all .15s}
+.bp2:hover{background:#1a2500}
+.bs{background:none;color:var(--mut);border:1px solid var(--bdr);font-family:'DM Mono',monospace;font-size:11px;padding:7px;border-radius:5px;cursor:pointer;width:100%;transition:all .15s}
+.bs:hover{border-color:var(--mut);color:var(--txt)}
+.empty{text-align:center;padding:70px 40px;color:var(--mut)}
+.empty .ico{font-size:32px;margin-bottom:10px}
+.empty p{font-family:'Syne',sans-serif;font-size:14px}
+</style>
+</head>
+<body>
+<div id="loading"><div class="spinner"></div><p>Chargement...</p></div>
+<div id="app">
+<header>
+  <div class="logo">ROUFFACH <span>/ PROSPECTION</span></div>
+  <div class="sw"><input type="text" id="SI" placeholder="Nom, activite, SIRET, rue..."></div>
+  <div class="ctr"><strong id="CNT">0</strong> entreprises</div>
+  <button class="ebtn" onclick="exportCSV()">&#8659; Export CSV</button>
+</header>
+<div class="layout">
+  <aside>
+    <div class="fs"><div class="ft">Rue / Voie</div>
+      <select class="rs" id="RS" onchange="setRue(this.value)"><option value="">-- Toutes les rues --</option></select>
+      <div class="rc" id="RC" onclick="clearRue()">&#10005; Effacer le filtre rue</div>
+    </div>
+    <div class="fs"><div class="ft">Activite (APE)</div><div id="AF"></div></div>
+    <div class="fs"><div class="ft">Effectifs</div><div id="EF"></div></div>
+    <div class="fs"><div class="ft">Categorie</div><div id="CF"></div></div>
+    <div class="fs" style="border-bottom:none"><div class="ft">Etablissement</div><div id="SGF"></div></div>
+  </aside>
+  <main>
+    <div class="sb">
+      <span class="sl">Trier :</span>
+      <button class="sbt on" onclick="setSort('nom',this)">Nom A&#8594;Z</button>
+      <button class="sbt" onclick="setSort('rue',this)">Par rue</button>
+      <button class="sbt" onclick="setSort('ape',this)">APE</button>
+      <button class="sbt" onclick="setSort('eff',this)">Effectif</button>
+      <button class="sbt" onclick="setSort('date',this)">Date creation</button>
+    </div>
+    <div class="lh">
+      <span>Entreprise</span><span>Activite</span><span>Effectif</span><span style="text-align:right">Creee</span>
+    </div>
+    <div id="LIST"></div>
+  </main>
+  <div class="dp" id="DP">
+    <div class="dh"><button class="dc" onclick="closeDetail()">&#215;</button><div class="dn" id="DN"></div></div>
+    <div class="db" id="DB"></div>
+    <div class="actbar">
+      <button class="bp" onclick="openFiche()">&#128269; Fiche entreprise (annuaire officiel)</button>
+      <button class="bp2" onclick="openRouffach()">&#128205; Toutes les entreprises de Rouffach</button>
+      <button class="bs" id="CBTN" onclick="copyInfo()">Copier les infos</button>
+    </div>
+  </div>
+</div>
+</div>
+<script>
+
+var DATA=[];
+var TORD={'00':0,'01':1,'02':2,'03':3,'11':4,'12':5,'21':6,'22':7,'32':8,'42':9,'NN':10,'':10};
+var filtered=[],fAPE=null,fEff=null,fCat=null,fSiege=null,fRue=null;
+var sortKey='nom',selSiren=null,search='';
+
+function decompress(b64str){
+  var bin=atob(b64str);
+  var bytes=new Uint8Array(bin.length);
+  for(var i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+  var ds=new DecompressionStream('gzip');
+  var writer=ds.writable.getWriter();
+  writer.write(bytes);writer.close();
+  var reader=ds.readable.getReader();
+  var chunks=[];
+  function read(){return reader.read().then(function(r){if(r.done)return;chunks.push(r.value);return read();});}
+  return read().then(function(){
+    var total=chunks.reduce(function(s,c){return s+c.length;},0);
+    var out=new Uint8Array(total);var off=0;
+    chunks.forEach(function(c){out.set(c,off);off+=c.length;});
+    return new TextDecoder().decode(out);
+  });
+}
+
+function nom(c){return(c.nom&&c.nom!='Confidentiel')?c.nom:'Confidentiel / Particulier';}
+function fd(d){if(!d)return '--';var p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d;}
+function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function init(data){
+  DATA=data;filtered=data.slice();
+  document.getElementById('loading').style.display='none';
+  document.getElementById('app').style.display='block';
+  document.getElementById('SI').addEventListener('input',function(e){search=e.target.value.toLowerCase();render();});
+  initFilters();render();
+}
+
+function initRue(){
+  var cts={};
+  DATA.forEach(function(c){if(c.rue)cts[c.rue]=(cts[c.rue]||0)+1;});
+  var keys=Object.keys(cts).sort(function(a,b){return a.localeCompare(b,'fr');});
+  var sel=document.getElementById('RS');
+  keys.forEach(function(r){var o=document.createElement('option');o.value=r;o.textContent=r+' ('+cts[r]+')';sel.appendChild(o);});
+}
+
+function setRue(v){fRue=v||null;document.getElementById('RC').classList.toggle('v',!!v);render();}
+function clearRue(){fRue=null;document.getElementById('RS').value='';document.getElementById('RC').classList.remove('v');render();}
+
+function mkbtn(lbl,cnt,cb,on){
+  return '<button class="fb'+(on?' on':'')+'" onclick="'+cb+'"><span class="lb">'+esc(lbl)+'</span><span class="ct">'+cnt+'</span></button>';
+}
+
+function initFilters(){
+  initRue();
+  var apc={},apl={};
+  DATA.forEach(function(c){if(c.ape){apc[c.ape]=(apc[c.ape]||0)+1;apl[c.ape]=c.apeLabel||c.ape;}});
+  var h=mkbtn('Toutes activites',DATA.length,'sf("ape",null,this)',true);
+  Object.entries(apc).sort(function(a,b){return b[1]-a[1];}).slice(0,35).forEach(function(e){h+=mkbtn(apl[e[0]],e[1],'sf("ape","'+e[0]+'",this)');});
+  document.getElementById('AF').innerHTML=h;
+  var eO=['00','01','02','03','11','12','21','22','32','42','NN'];
+  var eL={'00':'0 sal.','01':'1-2 sal.','02':'3-5 sal.','03':'6-9 sal.','11':'10-19 sal.','12':'20-49 sal.','21':'50-99 sal.','22':'100-199 sal.','32':'200-499 sal.','42':'500+ sal.','NN':'Non rens.'};
+  var ec={};DATA.forEach(function(c){var k=c.tranche||'NN';ec[k]=(ec[k]||0)+1;});
+  var eh=mkbtn('Tous',DATA.length,'sf("eff",null,this)',true);
+  eO.filter(function(k){return ec[k];}).forEach(function(k){eh+=mkbtn(eL[k],ec[k],'sf("eff","'+k+'",this)');});
+  document.getElementById('EF').innerHTML=eh;
+  var cc={};DATA.forEach(function(c){var v=c.categorie||'NC';cc[v]=(cc[v]||0)+1;});
+  var cL={'PME':'PME','ETI':'ETI','GE':'Grande entreprise','NC':'Non classee'};
+  var ch=mkbtn('Toutes',DATA.length,'sf("cat",null,this)',true);
+  Object.entries(cc).sort(function(a,b){return b[1]-a[1];}).forEach(function(e){ch+=mkbtn(cL[e[0]]||e[0],e[1],'sf("cat","'+e[0]+'",this)');});
+  document.getElementById('CF').innerHTML=ch;
+  var sc={t:0,f:0};DATA.forEach(function(c){c.siege?sc.t++:sc.f++;});
+  document.getElementById('SGF').innerHTML=
+    mkbtn('Tous',DATA.length,'sf("siege",null,this)',true)+
+    mkbtn('Sieges sociaux',sc.t,'sf("siege","true",this)')+
+    mkbtn('Etab. secondaires',sc.f,'sf("siege","false",this)');
+}
+
+function sf(type,val,el){
+  var map={ape:'AF',eff:'EF',cat:'CF',siege:'SGF'};
+  if(type==='ape')fAPE=val;if(type==='eff')fEff=val;if(type==='cat')fCat=val;if(type==='siege')fSiege=val;
+  document.querySelectorAll('#'+map[type]+' .fb').forEach(function(b){b.classList.remove('on');});
+  el.classList.add('on');render();
+}
+
+function setSort(k,el){
+  sortKey=k;document.querySelectorAll('.sbt').forEach(function(b){b.classList.remove('on');});el.classList.add('on');render();
+}
+
+function applyFilters(){
+  var d=DATA.slice();
+  if(fAPE)d=d.filter(function(c){return c.ape===fAPE;});
+  if(fEff!==null)d=d.filter(function(c){return(c.tranche||'NN')===fEff;});
+  if(fCat!==null){if(fCat==='NC')d=d.filter(function(c){return!c.categorie;});else d=d.filter(function(c){return c.categorie===fCat;});}
+  if(fSiege!==null)d=d.filter(function(c){return String(c.siege)===fSiege;});
+  if(fRue)d=d.filter(function(c){return c.rue===fRue;});
+  if(search)d=d.filter(function(c){
+    return nom(c).toLowerCase().indexOf(search)>=0||(c.apeLabel||'').toLowerCase().indexOf(search)>=0||
+      (c.ape||'').toLowerCase().indexOf(search)>=0||(c.siret||'').indexOf(search)>=0||
+      (c.adresse||'').toLowerCase().indexOf(search)>=0||(c.rue||'').toLowerCase().indexOf(search)>=0;
+  });
+  return d;
+}
+
+function sortData(d){
+  if(sortKey==='nom')return d.sort(function(a,b){return nom(a).localeCompare(nom(b),'fr');});
+  if(sortKey==='rue')return d.sort(function(a,b){return(a.rue||'zzz').localeCompare(b.rue||'zzz','fr');});
+  if(sortKey==='ape')return d.sort(function(a,b){return(a.ape||'').localeCompare(b.ape||'');});
+  if(sortKey==='eff')return d.sort(function(a,b){return(TORD[a.tranche||'NN']||10)-(TORD[b.tranche||'NN']||10);});
+  if(sortKey==='date')return d.sort(function(a,b){return(b.dateCreation||'').localeCompare(a.dateCreation||'');});
+  return d;
+}
+
+function render(){
+  var d=sortData(applyFilters());filtered=d;
+  document.getElementById('CNT').textContent=d.length;
+  var list=document.getElementById('LIST');
+  if(!d.length){list.innerHTML='<div class="empty"><div class="ico">&#8709;</div><p>Aucune entreprise</p></div>';return;}
+  var byRue=(sortKey==='rue');
+  var rcm={};if(byRue)d.forEach(function(c){var k=c.rue||'__';rcm[k]=(rcm[k]||0)+1;});
+  var rows=[];var lastRue='__INIT__';
+  d.forEach(function(c){
+    var hs=c.tranche&&c.tranche!='NN'&&c.tranche!='00'&&c.tranche!='';
+    var yr=c.dateCreation?c.dateCreation.substring(0,4):'--';
+    if(byRue){
+      var rk=c.rue||null;var rkKey=rk===null?'__NULL__':rk;
+      if(rkKey!==lastRue){
+        lastRue=rkKey;var lbl=rk||'-- Adresse non renseignee --';var cnt=rcm[rk||'__']||0;
+        rows.push('<div class="rsep">'+esc(lbl)+'<small>'+cnt+' entreprise'+(cnt>1?'s':'')+'</small></div>');
+      }
+    }
+    var sel=c.siren===selSiren?' sel':'';
+    var row='<div class="cr'+sel+'" data-siren="'+esc(c.siren)+'" onclick="showDetail(this.dataset.siren)">';
+    row+='<div><div class="cn">'+esc(nom(c))+'</div><div class="ca">'+esc(c.adresse||'--')+'</div></div>';
+    row+='<div class="cac"><b>'+esc(c.ape||'')+'</b>'+esc(c.apeLabel||c.ape||'--')+'</div>';
+    row+='<div><span class="eb'+(hs?' hs':'')+'">'+esc(c.effectif||'--')+'</span></div>';
+    row+='<div class="cd">'+yr+'</div></div>';
+    rows.push(row);
+  });
+  list.innerHTML=rows.join('');
+}
+
+function showDetail(siren){
+  selSiren=siren;var c=null;
+  for(var i=0;i<DATA.length;i++){if(DATA[i].siren===siren){c=DATA[i];break;}}
+  if(!c)return;
+  document.getElementById('DN').textContent=nom(c);
+  var cL={'PME':'PME','ETI':'ETI','GE':'Grande entreprise','':'Non classee'};
+  var rueHtml;
+  if(c.rue){
+    rueHtml='<span style="color:var(--acc)">'+esc(c.rue)+'</span>';
+    rueHtml+='<span class="rl" data-rue="'+esc(c.rue)+'" onclick="filterByRue(this.dataset.rue)">Voir toutes les entreprises de cette rue &#8594;</span>';
+  } else {
+    rueHtml='<span style="color:var(--mut)">Non renseignee</span>';
+  }
+  document.getElementById('DB').innerHTML=
+    row2('Activite','<span class="abadge">'+esc(c.ape||'')+'</span><div style="margin-top:4px;color:var(--mut);font-size:11px">'+esc(c.apeLabel||'')+'</div>')+
+    row2('Adresse',esc(c.adresse||'--'))+
+    row2('Rue',rueHtml)+
+    row2('SIRET','<span class="si">'+esc(c.siret||'--')+'</span>')+
+    row2('SIREN','<span class="si">'+esc(c.siren||'--')+'</span>')+
+    row2('Effectifs',esc(c.effectif||'--'))+
+    row2('Creation',fd(c.dateCreation))+
+    row2('Categorie',cL[c.categorie||'']||c.categorie||'--')+
+    row2('Etabl.',c.siege?'&#127968; Siege social':'&#127970; Etab. secondaire');
+  document.getElementById('DP').classList.add('open');render();
+}
+
+function row2(k,v){return'<div class="dr"><div class="dk">'+k+'</div><div class="dv">'+v+'</div></div>';}
+
+function filterByRue(rue){
+  fRue=rue;document.getElementById('RS').value=rue;document.getElementById('RC').classList.add('v');render();
+}
+
+function closeDetail(){selSiren=null;document.getElementById('DP').classList.remove('open');}
+
+function openFiche(){
+  var c=null;for(var i=0;i<DATA.length;i++){if(DATA[i].siren===selSiren){c=DATA[i];break;}}
+  if(c)window.open('https://annuaire-entreprises.data.gouv.fr/entreprise/'+c.siren,'_blank');
+}
+function openRouffach(){
+  window.open('https://annuaire-entreprises.data.gouv.fr/rechercher?terme=&cp_dep_label=Rouffach+%2868%29+%E2%80%94+toute+la+commune&cp_dep_type=insee&cp_dep=68287','_blank');
+}
+
+function copyInfo(){
+  var c=null;for(var i=0;i<DATA.length;i++){if(DATA[i].siren===selSiren){c=DATA[i];break;}}
+  if(!c)return;
+  var t=nom(c)+'\nSIRET: '+c.siret+'\nActivite: '+c.ape+' - '+c.apeLabel+'\nAdresse: '+c.adresse+'\nEffectif: '+c.effectif+'\nCreee: '+fd(c.dateCreation);
+  navigator.clipboard.writeText(t).then(function(){
+    var b=document.getElementById('CBTN');b.textContent='OK Copie !';
+    setTimeout(function(){b.textContent='Copier les infos';},2000);
+  });
+}
+
+function exportCSV(){
+  var h=['Nom','SIRET','SIREN','Code APE','Activite','Rue','Adresse','Effectifs','Date creation','Categorie','Siege'];
+  var rows=filtered.map(function(c){return[nom(c),c.siret,c.siren,c.ape,c.apeLabel,c.rue||'',c.adresse,c.effectif,c.dateCreation||'',c.categorie||'',c.siege?'Oui':'Non'];});
+  var csv=[h].concat(rows).map(function(r){return r.map(function(v){return'"'+String(v||'').replace(/"/g,'""')+'"';}).join(',');}).join('\n');
+  var a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'}));
+  a.download='prospection_rouffach_'+filtered.length+'.csv';a.click();
+}
+
+fetch('data.json').then(function(r){return r.json();}).then(function(d){init(d);});
+</script>
+</body>
+</html>
